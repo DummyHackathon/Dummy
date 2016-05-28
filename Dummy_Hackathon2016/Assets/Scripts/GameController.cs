@@ -22,8 +22,10 @@ public class GameController : MonoBehaviour {
     {
         if (touch == numberOfTouch)
         {
+            Debug.Log("Touch true");
             return true;
         }
+        Debug.Log("Touch false");
         return false;
     }
 
@@ -31,8 +33,10 @@ public class GameController : MonoBehaviour {
     {
         if (timeToTouch == 0)
         {
+            Debug.Log("True");
             return true;
         }
+        Debug.Log("False");
         return false;
     }
 }
