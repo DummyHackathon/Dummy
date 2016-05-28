@@ -7,6 +7,7 @@ public class ButtonManager : MonoBehaviour {
 
     Image img;
     float speed;
+    int firstTimeRun = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +22,18 @@ public class ButtonManager : MonoBehaviour {
 
     public void PlayClick()
     {
-        SceneManager.LoadScene("Scene1");
+        if (PlayerPrefs.HasKey("firstRun"))
+        {
+            firstTimeRun = PlayerPrefs.GetInt("firstRun");
+            if (firstTimeRun == 1)
+            {
+                SceneManager.LoadScene("Tutorial");
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Scene1");
+        }
+        
     }
 }
