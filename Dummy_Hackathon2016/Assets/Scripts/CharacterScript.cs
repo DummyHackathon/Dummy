@@ -5,6 +5,8 @@ public class CharacterScript : MonoBehaviour {
 
     Transform gameObj;
     int touch;
+    public float backgroundWidth;
+    public float backgroundCount;
 
 	// Use this for initialization
 	void Start () {
@@ -20,10 +22,14 @@ public class CharacterScript : MonoBehaviour {
     public void CharacterTouch()
     {
         touch++;
-        Vector3 newPosition = new Vector3(gameObj.position.x - Time.fixedDeltaTime * touch, gameObj.position.y, gameObj.position.z);
-        gameObj.position = newPosition;
-
-        //Vector3 newScale = new Vector3(gameObj.localScale.x - Time.fixedDeltaTime, gameObj.localScale.y, gameObj.localScale.z);
-        //gameObj.localScale = newScale;
+        //Vector3 newPosition = new Vector3(gameObj.position.x - Time.fixedDeltaTime * touch, gameObj.position.y, gameObj.position.z);
+        //gameObj.position = newPosition;
+        gameObj.transform.Translate(Vector3.left * Time.fixedDeltaTime * touch);
+        Vector3 pos = gameObj.position;
+        if (pos.x < -backgroundWidth)
+        {
+            pos.x += backgroundWidth * backgroundCount;
+            gameObj.position = pos;
+        }
     }
 }

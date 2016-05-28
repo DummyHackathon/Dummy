@@ -11,7 +11,7 @@ public class ButtonManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         img = GameObject.Find("PlayImage").GetComponent<Image>();
-        speed = 20.0f;
+        speed = 50.0f;
 	}
 	
 	// Update is called once per frame
