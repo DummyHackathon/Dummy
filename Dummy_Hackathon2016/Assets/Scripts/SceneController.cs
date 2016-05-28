@@ -1,18 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour {
 
     public int touch;
     public GameController gameController;
     public bool? isWin = null;
+    public Image Result;
+    Text txtResult;
 
     // Use this for initialization
     public void Start()
     {
         touch = 0;
         gameController = GameObject.Find("Main Camera").GetComponent<GameController>();
+        Result = GameObject.FindWithTag("Image").GetComponent<Image>();
+        txtResult = GameObject.FindWithTag("Image").GetComponentInChildren<Text>();
+        Result.enabled = false;
+        txtResult.enabled = false;
     }
 
     // Update is called once per frame
@@ -23,23 +30,17 @@ public class SceneController : MonoBehaviour {
     public void TouchOnButton()
     {
         touch++;
-        Debug.Log(touch);
-        if (!gameController.CheckTime())
+        if (!gameController.CheckTime() && gameController.CheckTouch(touch))
         {
-            if (gameController.CheckTouch(touch))
-            {
-                Debug.Log("Đã đủ");
-                isWin = true;
-            }
+            isWin = true;
+            Result.enabled = true;
+            txtResult.enabled = true;
         }
         else
         {
-            if (!gameController.CheckTouch(touch))
-            {
-                Debug.Log("Fail rồi");
-                isWin = false;
-            }
+            isWin = false;
         }
+        Debug.Log("isWin" + isWin);
     }
 
     public IEnumerator LoadScene(string scene)

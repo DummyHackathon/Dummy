@@ -2,60 +2,41 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Scene1Controller : MonoBehaviour {
+public class Scene1Controller : SceneController {
 
-    int touch;
-    GameController gameController;
-    bool? isWin = null;
-
-	// Use this for initialization
-	void Start () {
-        touch = 0;
-        gameController = GameObject.Find("Main Camera").GetComponent<GameController>();
+    public GameObject Character;
+    public GameObject Sleeping;
+    Animator anim;
+    new void Start()
+    {
+        base.Start();
+        anim = GameObject.Find("Character").GetComponent<Animator>();
+        if (Character.activeSelf == true)
+        {
+            Character.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
-    void Update () {
+    new void TouchOnButton()
+    {
+        base.TouchOnButton();
         if (isWin == true)
         {
-            gameController.UpdateGreenBar(0.1f, true);
-            StartCoroutine(LoadScene("Scene2"));
+            Sleeping.SetActive(false);
+            Character.SetActive(true);
+            anim.SetTrigger("Wakeup");
         }
-        else if (isWin == false)
-        {
-            gameController.UpdateGreenBar(0.1f, false);
-            StartCoroutine(LoadScene("Scene2"));
-        }
-	}
-
-    public void TouchOnButton()
-    {
-        touch++;
-        Debug.Log(touch);
-        if (!gameController.CheckTime())
-        {
-            if (gameController.CheckTouch(touch))
-            {
-                Debug.Log("Đã đủ");
-                isWin = true;
-            }
-        }
-        else
-        {
-            if (!gameController.CheckTouch(touch))
-            {
-                Debug.Log("Fail rồi");
-                isWin = false;
-            }
-        }
-        
     }
 
-    IEnumerator LoadScene(string scene)
+    public void BathroomClick()
     {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(scene);
+        gameController.UpdateGreenBar(0.02f, true);
+        SceneManager.LoadScene("Scene2");
     }
 
-
+    public void MainDoorClick()
+    {
+        gameController.UpdateGreenBar(0.02f, false);
+        SceneManager.LoadScene("Scene3");
+    }
 }
